@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ContactsForm from "./components/contacts-form/ContactsForm";
+import ContactsList from "./components/contacts-list/ContactsList";
 
 class App extends Component {
   state = {
@@ -18,6 +19,9 @@ class App extends Component {
       <main className="App">
         <h1>Phone book</h1>
         <ContactsForm onAddContact={this.onAddContact} />
+
+        <h2>Contacts</h2>
+        <ContactsList contacts={this.state.contacts} />
       </main>
     );
   }
