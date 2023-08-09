@@ -15,6 +15,14 @@ class App extends Component {
     filter: "",
   };
 
+  async componentDidMount() {
+    const contacts = await JSON.parse(localStorage.getItem("contacts"));
+
+    if (contacts) {
+      this.setState({ contacts });
+    }
+  }
+
   onAddContact = (contact) => {
     const isContactExist = this.state.contacts.some(
       (item) => item.name.toLowerCase() === contact.name.toLowerCase()
@@ -28,12 +36,22 @@ class App extends Component {
     this.setState((prevState) => ({
       contacts: [...prevState.contacts, { ...contact, id: nanoid() }],
     }));
+
+    localStorage.setItem(
+      "contacts",
+      JSON.stringify([...this.state.contacts, { ...contact, id: nanoid() }])
+    );
   };
 
   onDeleteContact = (id) => {
     this.setState((prevState) => ({
       contacts: prevState.contacts.filter((contact) => contact.id !== id),
     }));
+
+    localStorage.setItem(
+      "contacts",
+      JSON.stringify(this.state.contacts.filter((contact) => contact.id !== id))
+    );
   };
 
   setFilter = (filter) => {
