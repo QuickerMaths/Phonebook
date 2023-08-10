@@ -27,7 +27,6 @@ const ContactsForm = () => {
       .validate(contact, { abortEarly: false })
       .then((res) => {
         dispatch({ type: "ADD_CONTACT", payload: res });
-
         dispatch({ type: "CLEAR_ERRORS" });
       })
       .catch((err) => {
