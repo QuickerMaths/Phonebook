@@ -1,12 +1,11 @@
 import React from "react";
 import styles from "./ContactsList.module.css";
 import Contact from "./contact/Contact";
-import PropTypes from "prop-types";
 import { useAppContext } from "../../context/AppContext";
 
-const ContactsList = ({ contacts }) => {
+const ContactsList = () => {
   const {
-    state: { filter },
+    state: { filter, contacts },
   } = useAppContext();
 
   const filteredContacts = contacts.filter((contact) =>
@@ -17,27 +16,13 @@ const ContactsList = ({ contacts }) => {
     <ul className={styles.list}>
       {filteredContacts.length > 0 ? (
         filteredContacts.map((contact) => (
-          <Contact
-            contact={contact}
-            key={contact.id}
-            // onDeleteContact={onDeleteContact}
-          />
+          <Contact contact={contact} key={contact.id} />
         ))
       ) : (
         <p>No contacts found...</p>
       )}
     </ul>
   );
-};
-
-ContactsList.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-      id: PropTypes.string.isRequired,
-    })
-  ),
 };
 
 export default ContactsList;

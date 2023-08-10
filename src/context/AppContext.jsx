@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer } from "react";
+import React, { createContext, useContext, useReducer, useEffect } from "react";
 import { nanoid } from "nanoid";
 
 const AppContext = createContext({});
@@ -17,11 +17,6 @@ function reducer(state, action) {
         return state;
       }
 
-      localStorage.setItem(
-        "contacts",
-        JSON.stringify([...state.contacts, { ...action.payload, id: nanoid() }])
-      );
-
       return {
         ...state,
         contacts: [...state.contacts, { ...action.payload, id: nanoid() }],
@@ -30,6 +25,13 @@ function reducer(state, action) {
       return {
         ...state,
         filter: action.payload,
+      };
+    case "DELETE_CONTACT":
+      return {
+        ...state,
+        contacts: state.contacts.filter(
+          (contact) => contact.id !== action.payload
+        ),
       };
     case "CLEAR_ERRORS":
       return {
@@ -68,6 +70,10 @@ export const AppProvider = ({ children }) => {
     },
   };
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    localStorage.setItem("contacts", JSON.stringify(state.contacts));
+  }, [state.contacts]);
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>
