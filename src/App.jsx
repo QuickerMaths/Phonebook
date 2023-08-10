@@ -80,12 +80,11 @@ import { useAppContext } from "./context/AppContext";
 const App = () => {
   const {
     state: { contacts },
-    dispatch,
   } = useAppContext();
   return (
     <main className="App">
       <h1>Phone book</h1>
-      {/* <ContactsForm /> */}
+      <ContactsForm />
 
       <h2>Contacts</h2>
       {/* <Filter setFilter={this.setFilter} /> */}

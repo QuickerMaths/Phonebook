@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useReducer } from "react";
+import { nanoid } from "nanoid";
 
 const AppContext = createContext({});
 
@@ -9,7 +10,26 @@ function reducer(state, action) {
     case "ADD_CONTACT":
       return {
         ...state,
-        contacts: [...state.contacts, action.payload],
+        contacts: [...state.contacts, { ...action.payload, id: nanoid() }],
+      };
+    case "CLEAR_ERRORS":
+      return {
+        ...state,
+        errors: {
+          name: [],
+          number: [],
+        },
+      };
+    case "SET_ERRORS":
+      return {
+        ...state,
+        errors: {
+          ...state.errors,
+          [action.payload.path]: [
+            ...state.errors[action.payload.path],
+            action.payload.message,
+          ],
+        },
       };
     default:
       return state;
@@ -25,6 +45,10 @@ export const AppProvider = ({ children }) => {
       { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
     ],
     filter: "",
+    errors: {
+      name: [],
+      number: [],
+    },
   };
   const [state, dispatch] = useReducer(reducer, initialState);
 

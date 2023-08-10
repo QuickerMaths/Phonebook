@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import styles from "./ContactsForm.module.css";
 import FormElement from "./form-element/FormElement";
-import PropTypes from "prop-types";
+import { useAppContext } from "../../context/AppContext";
 import { contactValidation } from "../../validation/contactValidation";
 
 const ContactsForm = () => {
+  const {
+    dispatch,
+    state: { errors },
+  } = useAppContext();
+
   const [contact, setContact] = useState({
     name: "",
     number: "",
-  });
-
-  const [errors, setErrors] = useState({
-    name: [],
-    number: [],
   });
 
   const handleChange = (e) => {
@@ -21,26 +21,17 @@ const ContactsForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors({
-      name: [],
-      number: [],
-    });
+    dispatch({ type: "CLEAR_ERRORS" });
 
     await contactValidation
       .validate(contact, { abortEarly: false })
       .then((res) => {
-        onAddContact(res);
-        setErrors({
-          name: [],
-          number: [],
-        });
+        dispatch({ type: "ADD_CONTACT", payload: res });
+        dispatch({ type: "CLEAR_ERRORS" });
       })
       .catch((err) => {
         err.inner.forEach((e) => {
-          setErrors((prev) => ({
-            ...prev,
-            [e.path]: [...prev[e.path], e.message],
-          }));
+          dispatch({ type: "SET_ERRORS", payload: e });
         });
       });
   };
@@ -66,10 +57,6 @@ const ContactsForm = () => {
       </form>
     </section>
   );
-};
-
-ContactsForm.propTypes = {
-  onAddContact: PropTypes.func.isRequired,
 };
 
 export default ContactsForm;
