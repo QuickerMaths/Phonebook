@@ -8,6 +8,20 @@ export const useAppContext = () => useContext(AppContext);
 function reducer(state, action) {
   switch (action.type) {
     case "ADD_CONTACT":
+      const isContactExist = state.contacts.some(
+        (item) => item.name.toLowerCase() === action.payload.name.toLowerCase()
+      );
+
+      if (isContactExist) {
+        alert(`${action.payload.name} is already in contacts`);
+        return state;
+      }
+
+      localStorage.setItem(
+        "contacts",
+        JSON.stringify([...state.contacts, { ...action.payload, id: nanoid() }])
+      );
+
       return {
         ...state,
         contacts: [...state.contacts, { ...action.payload, id: nanoid() }],
@@ -21,14 +35,12 @@ function reducer(state, action) {
         },
       };
     case "SET_ERRORS":
+      const action = action.payload;
       return {
         ...state,
         errors: {
           ...state.errors,
-          [action.payload.path]: [
-            ...state.errors[action.payload.path],
-            action.payload.message,
-          ],
+          [action.path]: [...state.errors[action.path], action.message],
         },
       };
     default:
