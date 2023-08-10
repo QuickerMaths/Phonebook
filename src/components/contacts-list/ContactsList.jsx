@@ -3,19 +3,19 @@ import styles from "./ContactsList.module.css";
 import Contact from "./contact/Contact";
 import PropTypes from "prop-types";
 
-const ContactsList = ({ contacts, filter, onDeleteContact }) => {
-  const filteredContacts = contacts.filter((contact) =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
+const ContactsList = ({ contacts }) => {
+  // const filteredContacts = contacts.filter((contact) =>
+  //   contact.name.toLowerCase().includes(filter.toLowerCase())
+  // );
 
   return (
     <ul className={styles.list}>
-      {filteredContacts.length > 0 ? (
-        filteredContacts.map((contact) => (
+      {contacts.length > 0 ? (
+        contacts.map((contact) => (
           <Contact
             contact={contact}
             key={contact.id}
-            onDeleteContact={onDeleteContact}
+            // onDeleteContact={onDeleteContact}
           />
         ))
       ) : (
@@ -25,16 +25,16 @@ const ContactsList = ({ contacts, filter, onDeleteContact }) => {
   );
 };
 
-ContactsList.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-      id: PropTypes.string.isRequired,
-    })
-  ),
-  filter: PropTypes.string.isRequired,
-  onDeleteContact: PropTypes.func.isRequired,
-};
+// ContactsList.propTypes = {
+//   contacts: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       name: PropTypes.string.isRequired,
+//       number: PropTypes.string.isRequired,
+//       id: PropTypes.string.isRequired,
+//     })
+//   ),
+//   filter: PropTypes.string.isRequired,
+//   onDeleteContact: PropTypes.func.isRequired,
+// };
 
 export default ContactsList;

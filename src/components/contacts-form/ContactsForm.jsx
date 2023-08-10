@@ -4,7 +4,7 @@ import FormElement from "./form-element/FormElement";
 import PropTypes from "prop-types";
 import { contactValidation } from "../../validation/contactValidation";
 
-const ContactsForm = ({ onAddContact }) => {
+const ContactsForm = () => {
   const [contact, setContact] = useState({
     name: "",
     number: "",
