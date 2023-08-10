@@ -37,12 +37,6 @@ import { useAppContext } from "./context/AppContext";
 //       contacts: [...prevState.contacts, { ...contact, id: nanoid() }],
 //     }));
 
-//     localStorage.setItem(
-//       "contacts",
-//       JSON.stringify([...this.state.contacts, { ...contact, id: nanoid() }])
-//     );
-//   };
-
 //   onDeleteContact = (id) => {
 //     this.setState((prevState) => ({
 //       contacts: prevState.contacts.filter((contact) => contact.id !== id),
@@ -86,7 +80,7 @@ const App = () => {
       <ContactsForm />
 
       <h2>Contacts</h2>
-      {/* <Filter setFilter={this.setFilter} /> */}
+      <Filter />
       <ContactsList
         contacts={contacts}
         // filter={this.state.filter}

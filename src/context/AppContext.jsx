@@ -26,6 +26,11 @@ function reducer(state, action) {
         ...state,
         contacts: [...state.contacts, { ...action.payload, id: nanoid() }],
       };
+    case "SET_FILTER":
+      return {
+        ...state,
+        filter: action.payload,
+      };
     case "CLEAR_ERRORS":
       return {
         ...state,

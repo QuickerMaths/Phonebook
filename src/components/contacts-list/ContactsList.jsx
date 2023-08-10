@@ -2,16 +2,21 @@ import React from "react";
 import styles from "./ContactsList.module.css";
 import Contact from "./contact/Contact";
 import PropTypes from "prop-types";
+import { useAppContext } from "../../context/AppContext";
 
 const ContactsList = ({ contacts }) => {
-  // const filteredContacts = contacts.filter((contact) =>
-  //   contact.name.toLowerCase().includes(filter.toLowerCase())
-  // );
+  const {
+    state: { filter },
+  } = useAppContext();
+
+  const filteredContacts = contacts.filter((contact) =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   return (
     <ul className={styles.list}>
-      {contacts.length > 0 ? (
-        contacts.map((contact) => (
+      {filteredContacts.length > 0 ? (
+        filteredContacts.map((contact) => (
           <Contact
             contact={contact}
             key={contact.id}
@@ -25,16 +30,14 @@ const ContactsList = ({ contacts }) => {
   );
 };
 
-// ContactsList.propTypes = {
-//   contacts: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       name: PropTypes.string.isRequired,
-//       number: PropTypes.string.isRequired,
-//       id: PropTypes.string.isRequired,
-//     })
-//   ),
-//   filter: PropTypes.string.isRequired,
-//   onDeleteContact: PropTypes.func.isRequired,
-// };
+ContactsList.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
+    })
+  ),
+};
 
 export default ContactsList;
