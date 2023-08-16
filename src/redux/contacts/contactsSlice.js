@@ -62,31 +62,42 @@ export const deleteContact = createAsyncThunk(
 
 const initialState = {
   contacts: [],
+  isLoadingGet: false,
+  isLoadingPost: false,
+  isLoadingDelete: false,
 };
 
 const contactsSlice = createSlice({
   name: "contactsSlice",
   initialState,
-  reducers: {
-    setContacts(state, action) {
-      state.contacts = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(fetchContacts.pending, (state, _) => {
+      state.isLoadingGet = true;
+    });
     builder.addCase(fetchContacts.fulfilled, (state, action) => {
       state.contacts = action.payload;
+      state.isLoadingGet = false;
+    });
+
+    builder.addCase(createContact.pending, (state, _) => {
+      state.isLoadingPost = true;
     });
     builder.addCase(createContact.fulfilled, (state, action) => {
       state.contacts.push(action.payload);
+      state.isLoadingPost = false;
+    });
+
+    builder.addCase(deleteContact.pending, (state, _) => {
+      state.isLoadingDelete = true;
     });
     builder.addCase(deleteContact.fulfilled, (state, action) => {
       state.contacts = state.contacts.filter(
         (contact) => contact.id !== action.payload
       );
+      state.isLoadingDelete = false;
     });
   },
 });
-
-export const { setContacts } = contactsSlice.actions;
 
 export default contactsSlice.reducer;

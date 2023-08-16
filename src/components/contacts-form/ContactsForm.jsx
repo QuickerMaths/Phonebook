@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import styles from "./ContactsForm.module.css";
 import FormElement from "./form-element/FormElement";
 import { contactValidation } from "../../validation/contactValidation";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createContact } from "../../redux/contacts/contactsSlice";
 
 const ContactsForm = () => {
   const dispatch = useDispatch();
+  const { isLoadingPost } = useSelector((state) => state.contactsSlice);
 
   const [contact, setContact] = useState({
     name: "",
@@ -30,6 +31,7 @@ const ContactsForm = () => {
       .validate(contact, { abortEarly: false })
       .then((res) => {
         dispatch(createContact(res));
+        setContact({ name: "", number: "" });
       })
       .catch((err) => {
         err.inner.forEach((e) => {
@@ -57,8 +59,12 @@ const ContactsForm = () => {
           handleChange={handleChange}
           errors={errors.number}
         />
-        <button type="submit" className={styles.button}>
-          Add contact
+        <button
+          type="submit"
+          disabled={isLoadingPost}
+          className={styles.button}
+        >
+          {isLoadingPost ? "Adding..." : "Add contact"}
         </button>
       </form>
     </section>
