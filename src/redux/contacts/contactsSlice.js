@@ -15,34 +15,45 @@ export const fetchContacts = createAsyncThunk(
   }
 );
 
-const initialState = {
-  contacts: localStorage.getItem("contacts")
-    ? JSON.parse(localStorage.getItem("contacts"))
-    : [],
-  errors: {
-    name: false,
-    number: false,
+export const createContact = createAsyncThunk(
+  "contactsSlice/createContact",
+  async (contact, thunkAPI) => {
+    try {
+      const res = await axios.post(
+        "https://64dd1771e64a8525a0f798c3.mockapi.io/api/v1/contacts",
+        {
+          name: contact.name,
+          number: contact.number,
+          id: nanoid(),
+        }
+      );
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
   },
+  {
+    condition: (contact, { getState }) => {
+      const isContactExist = getState().contactsSlice.contacts.find(
+        (item) => item.name === contact.name
+      );
+
+      if (isContactExist) {
+        alert(`${contact.name} is already in contacts.`);
+        return false;
+      }
+    },
+  }
+);
+
+const initialState = {
+  contacts: [],
 };
 
 const contactsSlice = createSlice({
   name: "contactsSlice",
   initialState,
   reducers: {
-    addContact: {
-      reducer(state, action) {
-        state.contacts.push(action.payload);
-      },
-      prepare({ name, number }) {
-        return {
-          payload: {
-            id: nanoid(),
-            name,
-            number,
-          },
-        };
-      },
-    },
     deleteContact(state, action) {
       state.contacts = state.contacts.filter(
         (contact) => contact.id !== action.payload
@@ -55,11 +66,13 @@ const contactsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchContacts.fulfilled, (state, action) => {
       state.contacts = action.payload;
-      console.log(action.payload);
+    });
+    builder.addCase(createContact.fulfilled, (state, action) => {
+      state.contacts.push(action.payload);
     });
   },
 });
 
-export const { addContact, deleteContact, setContacts } = contactsSlice.actions;
+export const { deleteContact, setContacts } = contactsSlice.actions;
 
 export default contactsSlice.reducer;

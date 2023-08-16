@@ -3,7 +3,7 @@ import styles from "./ContactsForm.module.css";
 import FormElement from "./form-element/FormElement";
 import { contactValidation } from "../../validation/contactValidation";
 import { useDispatch } from "react-redux";
-import { addContact } from "../../redux/contacts/contactsSlice";
+import { createContact } from "../../redux/contacts/contactsSlice";
 
 const ContactsForm = () => {
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const ContactsForm = () => {
     await contactValidation
       .validate(contact, { abortEarly: false })
       .then((res) => {
-        dispatch(addContact(res));
+        dispatch(createContact(res));
       })
       .catch((err) => {
         err.inner.forEach((e) => {
