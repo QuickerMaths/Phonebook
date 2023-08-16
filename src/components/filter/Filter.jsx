@@ -1,18 +1,18 @@
 import React from "react";
 import styles from "./Filter.module.css";
-import { useAppContext } from "../../context/AppContext";
+import { useDispatch } from "react-redux";
+import { setFilter } from "../../redux/filter/filterSlice";
 
 const Filter = () => {
-  const { dispatch } = useAppContext();
+  const dispatch = useDispatch();
+
   return (
     <label className={styles.label}>
       Find contacts by name
       <input
         className={styles.input}
         type="text"
-        onChange={(e) =>
-          dispatch({ type: "SET_FILTER", payload: e.target.value })
-        }
+        onChange={(e) => dispatch(setFilter(e.target.value))}
       />
     </label>
   );

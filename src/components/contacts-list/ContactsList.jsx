@@ -1,12 +1,11 @@
 import React from "react";
 import styles from "./ContactsList.module.css";
 import Contact from "./contact/Contact";
-import { useAppContext } from "../../context/AppContext";
+import { useSelector } from "react-redux";
 
 const ContactsList = () => {
-  const {
-    state: { filter, contacts },
-  } = useAppContext();
+  const { contacts } = useSelector((state) => state.contactsSlice);
+  const { filter } = useSelector((state) => state.filterSlice);
 
   const filteredContacts = contacts.filter((contact) =>
     contact.name.toLowerCase().includes(filter.toLowerCase())

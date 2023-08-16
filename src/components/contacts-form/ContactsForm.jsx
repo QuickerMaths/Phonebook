@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import styles from "./ContactsForm.module.css";
 import FormElement from "./form-element/FormElement";
-import { useAppContext } from "../../context/AppContext";
 import { contactValidation } from "../../validation/contactValidation";
+import { useDispatch } from "react-redux";
+import { addContact } from "../../redux/contacts/contactsSlice";
 
 const ContactsForm = () => {
-  const {
-    dispatch,
-    state: { errors },
-  } = useAppContext();
+  const dispatch = useDispatch();
 
   const [contact, setContact] = useState({
     name: "",
     number: "",
+  });
+
+  const [errors, setErrors] = useState({
+    name: [],
+    number: [],
   });
 
   const handleChange = (e) => {
@@ -21,18 +24,21 @@ const ContactsForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch({ type: "CLEAR_ERRORS" });
+    setErrors({ name: [], number: [] });
 
     await contactValidation
       .validate(contact, { abortEarly: false })
       .then((res) => {
-        dispatch({ type: "ADD_CONTACT", payload: res });
-        dispatch({ type: "CLEAR_ERRORS" });
+        dispatch(addContact(res));
       })
       .catch((err) => {
         err.inner.forEach((e) => {
-          dispatch({ type: "SET_ERRORS", payload: e });
+          setErrors((prev) => ({
+            ...prev,
+            [e.path]: [...prev[e.path], e.message],
+          }));
         });
+        console.log(err);
       });
   };
 

@@ -31,7 +31,7 @@ FormElement.propTypes = {
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
-  errors: PropTypes.array.isRequired,
+  errors: PropTypes.array,
 };
 
 export default FormElement;
