@@ -10,7 +10,9 @@ export const fetchContacts = createAsyncThunk(
       );
       return contacts.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(
+        "Internal server error, please try again later."
+      );
     }
   }
 );
@@ -29,7 +31,9 @@ export const createContact = createAsyncThunk(
       );
       return res.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(
+        "Internal server error, please try again later."
+      );
     }
   },
   {
@@ -55,16 +59,17 @@ export const deleteContact = createAsyncThunk(
       );
       return id;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(
+        "Internal server error, please try again later."
+      );
     }
   }
 );
 
 const initialState = {
   contacts: [],
-  isLoadingGet: false,
-  isLoadingPost: false,
-  isLoadingDelete: false,
+  loading: false,
+  error: null,
 };
 
 const contactsSlice = createSlice({
@@ -73,29 +78,53 @@ const contactsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchContacts.pending, (state, _) => {
-      state.isLoadingGet = true;
+      state.loading = true;
     });
     builder.addCase(fetchContacts.fulfilled, (state, action) => {
-      state.contacts = action.payload;
-      state.isLoadingGet = false;
+      if (state.loading) {
+        state.loading = false;
+        state.contacts = action.payload;
+      }
+    });
+    builder.addCase(fetchContacts.rejected, (state, action) => {
+      if (state.loading) {
+        state.loading = false;
+        state.error = action.payload;
+      }
     });
 
     builder.addCase(createContact.pending, (state, _) => {
-      state.isLoadingPost = true;
+      state.loading = true;
     });
     builder.addCase(createContact.fulfilled, (state, action) => {
-      state.contacts.push(action.payload);
-      state.isLoadingPost = false;
+      if (state.loading) {
+        state.loading = false;
+        state.contacts.push(action.payload);
+      }
+    });
+    builder.addCase(fetchContacts.rejected, (state, action) => {
+      if (state.loading) {
+        state.loading = false;
+        state.error = action.payload;
+      }
     });
 
     builder.addCase(deleteContact.pending, (state, _) => {
-      state.isLoadingDelete = true;
+      state.loading = true;
     });
     builder.addCase(deleteContact.fulfilled, (state, action) => {
-      state.contacts = state.contacts.filter(
-        (contact) => contact.id !== action.payload
-      );
-      state.isLoadingDelete = false;
+      if (state.loading) {
+        state.loading = false;
+        state.contacts = state.contacts.filter(
+          (contact) => contact.id !== action.payload
+        );
+      }
+    });
+    builder.addCase(fetchContacts.rejected, (state, action) => {
+      if (state.loading) {
+        state.loading = false;
+        state.error = action.payload;
+      }
     });
   },
 });

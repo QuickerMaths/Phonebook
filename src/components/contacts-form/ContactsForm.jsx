@@ -7,7 +7,7 @@ import { createContact } from "../../redux/contacts/contactsSlice";
 
 const ContactsForm = () => {
   const dispatch = useDispatch();
-  const { isLoadingPost } = useSelector((state) => state.contactsSlice);
+  const { loading } = useSelector((state) => state.contactsSlice);
 
   const [contact, setContact] = useState({
     name: "",
@@ -31,7 +31,6 @@ const ContactsForm = () => {
       .validate(contact, { abortEarly: false })
       .then((res) => {
         dispatch(createContact(res));
-        setContact({ name: "", number: "" });
       })
       .catch((err) => {
         err.inner.forEach((e) => {
@@ -59,12 +58,8 @@ const ContactsForm = () => {
           handleChange={handleChange}
           errors={errors.number}
         />
-        <button
-          type="submit"
-          disabled={isLoadingPost}
-          className={styles.button}
-        >
-          {isLoadingPost ? "Adding..." : "Add contact"}
+        <button type="submit" disabled={loading} className={styles.button}>
+          Add contact
         </button>
       </form>
     </section>

@@ -7,11 +7,21 @@ import { fetchContacts } from "./redux/contacts/contactsSlice";
 
 const App = () => {
   const dispatch = useDispatch();
-  const { isLoadingGet } = useSelector((state) => state.contactsSlice);
+  const { loading, error } = useSelector((state) => state.contactsSlice);
 
   useEffect(() => {
     dispatch(fetchContacts());
   }, []);
+
+  let content;
+
+  if (loading) {
+    content = <h2>Loading...</h2>;
+  } else if (error) {
+    content = <h2>{error}</h2>;
+  } else {
+    content = <ContactsList />;
+  }
 
   return (
     <main className="App">
@@ -20,7 +30,7 @@ const App = () => {
 
       <h2>Contacts</h2>
       <Filter />
-      {isLoadingGet ? <h2>Loading...</h2> : <ContactsList />}
+      {content}
     </main>
   );
 };
