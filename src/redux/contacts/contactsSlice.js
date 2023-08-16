@@ -120,7 +120,7 @@ const contactsSlice = createSlice({
         );
       }
     });
-    builder.addCase(fetchContacts.rejected, (state, action) => {
+    builder.addCase(deleteContact.rejected, (state, action) => {
       if (state.loading) {
         state.loading = false;
         state.error = action.payload;
