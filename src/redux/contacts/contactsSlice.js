@@ -46,6 +46,20 @@ export const createContact = createAsyncThunk(
   }
 );
 
+export const deleteContact = createAsyncThunk(
+  "contactsSlice/deleteContact",
+  async (id, thunkAPI) => {
+    try {
+      await axios.delete(
+        `https://64dd1771e64a8525a0f798c3.mockapi.io/api/v1/contacts/${id}`
+      );
+      return id;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 const initialState = {
   contacts: [],
 };
@@ -54,11 +68,6 @@ const contactsSlice = createSlice({
   name: "contactsSlice",
   initialState,
   reducers: {
-    deleteContact(state, action) {
-      state.contacts = state.contacts.filter(
-        (contact) => contact.id !== action.payload
-      );
-    },
     setContacts(state, action) {
       state.contacts = action.payload;
     },
@@ -70,9 +79,14 @@ const contactsSlice = createSlice({
     builder.addCase(createContact.fulfilled, (state, action) => {
       state.contacts.push(action.payload);
     });
+    builder.addCase(deleteContact.fulfilled, (state, action) => {
+      state.contacts = state.contacts.filter(
+        (contact) => contact.id !== action.payload
+      );
+    });
   },
 });
 
-export const { deleteContact, setContacts } = contactsSlice.actions;
+export const { setContacts } = contactsSlice.actions;
 
 export default contactsSlice.reducer;
