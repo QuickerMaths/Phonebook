@@ -5,7 +5,7 @@ import Filter from "../../components/filter/Filter";
 import ContactsList from "../../components/contacts-list/ContactsList";
 import { fetchContacts } from "../../redux/contacts/contactsSlice";
 
-const HomePage = () => {
+const Contacts = () => {
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.contactsSlice);
 
@@ -35,4 +35,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Contacts;
