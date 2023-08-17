@@ -5,12 +5,12 @@ import Header from "../header/Header";
 
 const ShardLayout = () => {
   return (
-    <Container>
+    <>
       <Header />
       <Suspense fallback={<h2>Loading...</h2>}>
         <Outlet />
       </Suspense>
-    </Container>
+    </>
   );
 };
 
