@@ -102,7 +102,7 @@ const contactsSlice = createSlice({
         state.contacts.push(action.payload);
       }
     });
-    builder.addCase(fetchContacts.rejected, (state, action) => {
+    builder.addCase(createContact.rejected, (state, action) => {
       if (state.loading) {
         state.loading = false;
         state.error = action.payload;
