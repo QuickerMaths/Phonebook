@@ -11,7 +11,7 @@ const Register = lazy(() => import("./pages/register/Register"));
 
 const App = () => {
   return (
-    <Container sx={{ minHeight: "100vh" }}>
+    <Container sx={{ minheight: "100vh" }}>
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />

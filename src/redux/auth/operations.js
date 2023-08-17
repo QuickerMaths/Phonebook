@@ -1,16 +1,29 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const baseUrl = "https://connections-api.herokuapp.com/users/signup";
+const baseUrl = "https://connections-api.herokuapp.com";
 
 export const signupUser = createAsyncThunk(
   "auth/signupUser",
-  async (credentials, thunkAPI) => {
+  async ({ name, email, password }, thunkAPI) => {
     try {
-      const response = await axios.post(`${baseUrl}/users/signup`, credentials);
+      const response = await axios.post(
+        `${baseUrl}/users/signup`,
+        {
+          name,
+          email,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue("User with this email already exists");
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );

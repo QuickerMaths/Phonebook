@@ -16,4 +16,8 @@ export const userSignUpValidationSchema = yup.object().shape({
     .min(8, "Password is too short - should be 8 chars minimum.")
     .max(35, "Password is too long - should be 35 chars maximum.")
     .matches(/(?=.*[0-9])/, "Password must contain a number."),
+  confirmPassword: yup
+    .string()
+    .required("Please confirm your password.")
+    .oneOf([yup.ref("password"), null], "Passwords must match"),
 });

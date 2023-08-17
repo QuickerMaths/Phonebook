@@ -1,10 +1,14 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Typography, Box, IconButton, Menu, MenuItem } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import { Link } from "react-router-dom";
 
 const Header = () => {
-  const isUserLoggedIn = true;
-  const userMail = "example@gmail.com";
+  const {
+    currentUser: { email },
+    token,
+  } = useSelector((state) => state.authSlice);
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -20,16 +24,21 @@ const Header = () => {
     <Box
       sx={{
         p: 2,
-        minHeight: "10vh",
         display: "flex",
         justifyContent: "space-between",
+        backgroundColor: "primary.main",
       }}
       component="header"
     >
-      <Typography variant="h1" sx={{ fontSize: 36, color: "secondary.main" }}>
-        PhoneBook
-      </Typography>
-      {isUserLoggedIn && (
+      <Link to="/" style={{ textDecoration: "none" }}>
+        <Typography
+          variant="h1"
+          sx={{ fontSize: 36, color: "secondary.main", fontWeight: "bold" }}
+        >
+          PhoneBook
+        </Typography>
+      </Link>
+      {token && (
         <div>
           <IconButton
             size="large"
@@ -39,7 +48,7 @@ const Header = () => {
             onClick={handleMenu}
             color="inherit"
           >
-            <AccountCircle />
+            <AccountCircle sx={{ color: "secondary.main" }} />
           </IconButton>
           <Menu
             id="menu-appbar"
@@ -56,7 +65,7 @@ const Header = () => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>{userMail}</MenuItem>
+            <MenuItem onClick={handleClose}>{email}</MenuItem>
             <MenuItem onClick={handleClose}>Logout</MenuItem>
           </Menu>
         </div>

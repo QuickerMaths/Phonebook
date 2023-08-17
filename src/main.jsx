@@ -11,15 +11,15 @@ export const theme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#e3f2fd",
-      light: "#90caf9",
-      dark: "#42a5f5",
+      main: "#29b6f6",
+      light: "#4fc3f7",
+      dark: "#0288d1",
       contrastText: "#000",
     },
     secondary: {
-      main: "#ffb74d",
-      light: "#ffa726",
-      dark: "#ffa726",
+      main: "#ffa726",
+      light: "#ffb74d",
+      dark: "#f57c00",
       contrastText: "#000",
     },
   },

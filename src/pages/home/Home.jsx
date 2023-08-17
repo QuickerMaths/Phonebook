@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <Box
       sx={{
-        minHeight: "90vh",
+        minheight: "90vh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -19,11 +19,15 @@ const Home = () => {
         sx={{
           fontSize: 24,
           fontWeight: "bold",
+          color: "secondary.main",
         }}
       >
         Welcome to PhoneBook
       </Typography>
-      <Typography variant="body1" sx={{ fontSize: 20, mt: 5 }}>
+      <Typography
+        variant="body1"
+        sx={{ fontSize: 20, mt: 5, color: "secondary.main" }}
+      >
         Register or Login
       </Typography>
 
@@ -32,9 +36,10 @@ const Home = () => {
           sx={{
             minWidth: 200,
             backgroundColor: "primary.dark",
+            color: "white",
+            fontWeight: "bold",
             "&:hover": {
-              backgroundColor: "primary.main",
-              opacity: [0.9, 0.8, 0.7],
+              backgroundColor: "primary.light",
               color: "primary.contrastText",
             },
           }}
@@ -47,9 +52,10 @@ const Home = () => {
           sx={{
             minWidth: 200,
             backgroundColor: "primary.dark",
+            color: "white",
+            fontWeight: "bold",
             "&:hover": {
-              backgroundColor: "primary.main",
-              opacity: [0.9, 0.8, 0.7],
+              backgroundColor: "primary.light",
               color: "primary.contrastText",
             },
           }}
