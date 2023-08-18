@@ -8,6 +8,7 @@ import { loginUser } from "../../redux/auth/operations";
 import { resetError } from "../../redux/auth/authSlice";
 import InputField from "../../components/formUI/input-field/InputField";
 import SubmitButton from "../../components/formUI/submit-button/SubmitButton";
+import GrowError from "../../components/formUI/grow-error/GrowError";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -31,36 +32,7 @@ const Login = () => {
           borderRadius: "10px",
         }}
       >
-        {error && (
-          <Grow
-            in={error}
-            style={{ transformOrigin: "0 0 0 0" }}
-            {...(error ? { timeout: 1000 } : {})}
-            unmountOnExit
-          >
-            <Alert
-              sx={{
-                width: "100%",
-                mx: "auto",
-                position: "absolute",
-                top: "-80px",
-              }}
-              severity="error"
-              variant="outlined"
-              action={
-                <Button
-                  color="inherit"
-                  size="small"
-                  onClick={() => dispatch(resetError())}
-                >
-                  CLOSE
-                </Button>
-              }
-            >
-              <strong>{error}</strong>
-            </Alert>
-          </Grow>
-        )}
+        {error && <GrowError error={error} />}
         <Typography variant="h4">Login</Typography>
         <Formik
           initialValues={{
