@@ -4,7 +4,7 @@ import { Grow, Alert, Button } from "@mui/material";
 import { resetError } from "../../../redux/auth/authSlice";
 import PropTypes from "prop-types";
 
-const GrowError = ({ error }) => {
+const GrowError = ({ error, sx = [] }) => {
   const dispatch = useDispatch();
 
   return (
@@ -15,12 +15,13 @@ const GrowError = ({ error }) => {
       unmountOnExit
     >
       <Alert
-        sx={{
-          width: "100%",
-          mx: "auto",
-          position: "absolute",
-          top: "-80px",
-        }}
+        sx={[
+          {
+            width: "100%",
+            mx: "auto",
+          },
+          ...(Array.isArray(sx) ? sx : [sx]),
+        ]}
         severity="error"
         variant="outlined"
         action={
@@ -41,6 +42,13 @@ const GrowError = ({ error }) => {
 
 GrowError.propTypes = {
   error: PropTypes.string.isRequired,
+  sx: PropTypes.oneOfType([
+    PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])
+    ),
+    PropTypes.func,
+    PropTypes.object,
+  ]),
 };
 
 export default GrowError;

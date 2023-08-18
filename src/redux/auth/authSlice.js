@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { signupUser, loginUser } from "./operations";
+import { signupUser, loginUser, logoutUser } from "./operations";
 
 const handleReject = (state, action) => {
   if (state.loading) {
@@ -27,7 +27,7 @@ const handleFulfilled = (state, action) => {
 
 const initialState = {
   currentUser: { name: null, email: null },
-  token: localStorage.getItem("token") ? localStorage.getItem("token") : null,
+  token: null,
   loading: false,
   status: "idle",
   error: null,
@@ -55,6 +55,20 @@ const authSlice = createSlice({
       handleFulfilled(state, action)
     );
     builder.addCase(loginUser.rejected, (state, action) =>
+      handleReject(state, action)
+    );
+
+    builder.addCase(logoutUser.pending, (state, _) => handlePending(state));
+    builder.addCase(logoutUser.fulfilled, (state, _) => {
+      if (state.loading) {
+        state.loading = false;
+        state.status = "fulfilled";
+        state.currentUser.name = null;
+        state.currentUser.email = null;
+        state.token = null;
+      }
+    });
+    builder.addCase(logoutUser.rejected, (state, action) =>
       handleReject(state, action)
     );
   },

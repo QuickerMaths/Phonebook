@@ -1,11 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Container, Box, Typography, Alert, Button, Grow } from "@mui/material";
+import { Container, Box, Typography } from "@mui/material";
 import { Form, Formik } from "formik";
 import { userLoginValidationSchema } from "../../validation/userLoginValidation";
 import { loginUser } from "../../redux/auth/operations";
-import { resetError } from "../../redux/auth/authSlice";
 import InputField from "../../components/formUI/input-field/InputField";
 import SubmitButton from "../../components/formUI/submit-button/SubmitButton";
 import GrowError from "../../components/formUI/grow-error/GrowError";
@@ -32,7 +31,15 @@ const Login = () => {
           borderRadius: "10px",
         }}
       >
-        {error && <GrowError error={error} />}
+        {error && (
+          <GrowError
+            error={error}
+            sx={() => ({
+              position: "absolute",
+              top: "-80px",
+            })}
+          />
+        )}
         <Typography variant="h4">Login</Typography>
         <Formik
           initialValues={{
@@ -40,7 +47,7 @@ const Login = () => {
             password: "",
           }}
           validationSchema={userLoginValidationSchema}
-          onSubmit={async (values) => {
+          onSubmit={(values) => {
             dispatch(
               loginUser({
                 email: values.email,

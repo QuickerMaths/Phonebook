@@ -1,6 +1,6 @@
-import { Container } from "@mui/material";
 import React, { lazy } from "react";
 import { Routes, Route } from "react-router-dom";
+import { Container } from "@mui/material";
 
 import SharedLayout from "./components/shared-layout/SharedLayout";
 

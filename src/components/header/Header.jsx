@@ -1,13 +1,27 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { Typography, Box, IconButton, Menu, MenuItem } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  Typography,
+  Box,
+  IconButton,
+  Menu,
+  MenuItem,
+  Button,
+} from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import { Link } from "react-router-dom";
+import { logoutUser } from "../../redux/auth/operations";
+import GrowError from "../formUI/grow-error/GrowError";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const {
     currentUser: { email },
     token,
+    error,
+    status,
   } = useSelector((state) => state.authSlice);
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -27,13 +41,28 @@ const Header = () => {
         display: "flex",
         justifyContent: "space-between",
         backgroundColor: "primary.main",
+        position: "relative",
+        mb: 20,
       }}
       component="header"
     >
+      {error && (
+        <GrowError
+          error={error}
+          sx={() => ({
+            position: "absolute",
+            bottom: "-80px",
+          })}
+        />
+      )}
       <Link to="/" style={{ textDecoration: "none" }}>
         <Typography
           variant="h1"
-          sx={{ fontSize: 36, color: "secondary.main", fontWeight: "bold" }}
+          sx={{
+            fontSize: 36,
+            color: "secondary.main",
+            fontWeight: "bold",
+          }}
         >
           PhoneBook
         </Typography>
@@ -66,7 +95,15 @@ const Header = () => {
             onClose={handleClose}
           >
             <MenuItem onClick={handleClose}>{email}</MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
+            <MenuItem onClick={handleClose}>
+              <Button
+                onClick={() => {
+                  dispatch(logoutUser());
+                }}
+              >
+                LogOut
+              </Button>
+            </MenuItem>
           </Menu>
         </div>
       )}
