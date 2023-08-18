@@ -27,3 +27,27 @@ export const signupUser = createAsyncThunk(
     }
   }
 );
+
+export const loginUser = createAsyncThunk(
+  "auth/loginUser",
+  async ({ email, password }, thunkAPI) => {
+    try {
+      const response = await axios.post(
+        `${baseUrl}/users/login`,
+        {
+          email,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
