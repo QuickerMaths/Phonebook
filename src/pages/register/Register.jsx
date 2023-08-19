@@ -12,7 +12,7 @@ import GrowError from "../../components/formUI/grow-error/GrowError";
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { status, error } = useSelector((state) => state.authSlice);
+  const { error } = useSelector((state) => state.authSlice);
 
   return (
     <Container minheight="90vh">
@@ -50,16 +50,13 @@ const Register = () => {
           }}
           validationSchema={userSignUpValidationSchema}
           onSubmit={async (values) => {
-            dispatch(
+            await dispatch(
               signupUser({
                 name: values.name,
                 email: values.email,
                 password: values.password,
               })
-            );
-            if (status === "fulfilled") {
-              navigate("/");
-            }
+            ).then(() => navigate("/contacts"));
           }}
         >
           <Form>

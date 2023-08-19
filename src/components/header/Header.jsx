@@ -21,7 +21,6 @@ const Header = () => {
     currentUser: { email },
     token,
     error,
-    status,
   } = useSelector((state) => state.authSlice);
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -55,7 +54,7 @@ const Header = () => {
           })}
         />
       )}
-      <Link to="/" style={{ textDecoration: "none" }}>
+      <Link to={token ? "/contacts" : "/"} style={{ textDecoration: "none" }}>
         <Typography
           variant="h1"
           sx={{

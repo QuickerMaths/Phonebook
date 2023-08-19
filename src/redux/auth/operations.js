@@ -75,3 +75,18 @@ export const logoutUser = createAsyncThunk(
     }
   }
 );
+
+export const currentUser = createAsyncThunk(
+  "auth/currentUser",
+  async (token, thunkAPI) => {
+    try {
+      setAuthorizationHeader(token);
+
+      const response = await axios.get(`${baseUrl}/users/current`);
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
