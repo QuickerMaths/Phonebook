@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "./ContactsList.module.css";
-import Contact from "./contact/Contact";
 import { useSelector } from "react-redux";
+import { List, Typography } from "@mui/material";
+import Contact from "./contact/Contact";
 
 const ContactsList = () => {
   const { contacts } = useSelector((state) => state.contactsSlice);
@@ -12,15 +12,20 @@ const ContactsList = () => {
   );
 
   return (
-    <ul className={styles.list}>
+    <List
+      sx={{
+        width: "100%",
+        maxWidth: 200,
+      }}
+    >
       {filteredContacts.length > 0 ? (
         filteredContacts.map((contact) => (
           <Contact contact={contact} key={contact.id} />
         ))
       ) : (
-        <p>No contacts found...</p>
+        <Typography variant="body1">No contacts found...</Typography>
       )}
-    </ul>
+    </List>
   );
 };
 

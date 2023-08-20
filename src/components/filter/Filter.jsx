@@ -1,20 +1,18 @@
 import React from "react";
-import styles from "./Filter.module.css";
 import { useDispatch } from "react-redux";
+import { TextField } from "@mui/material";
 import { setFilter } from "../../redux/filter/filterSlice";
 
 const Filter = () => {
   const dispatch = useDispatch();
 
   return (
-    <label className={styles.label}>
-      Find contacts by name
-      <input
-        className={styles.input}
-        type="text"
-        onChange={(e) => dispatch(setFilter(e.target.value))}
-      />
-    </label>
+    <TextField
+      sx={{ width: "50%" }}
+      variant="outlined"
+      label="Find contacts by name"
+      onChange={(e) => dispatch(setFilter(e.target.value))}
+    />
   );
 };
 

@@ -11,6 +11,10 @@ const Login = lazy(() => import("./pages/login/Login"));
 const Register = lazy(() => import("./pages/register/Register"));
 const Contacts = lazy(() => import("./pages/contacts/Contacts"));
 
+//TODO: use react presist to save token in local storage
+
+//TODO: look at this code to find possible bugs and fix them
+
 const App = () => {
   const navigate = useNavigate();
   const { token } = useSelector((state) => state.authSlice);

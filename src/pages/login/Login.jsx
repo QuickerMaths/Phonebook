@@ -12,7 +12,7 @@ import GrowError from "../../components/formUI/grow-error/GrowError";
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { error } = useSelector((state) => state.authSlice);
+  const { error, loading } = useSelector((state) => state.authSlice);
 
   return (
     <Container minheight="90vh">
@@ -59,7 +59,7 @@ const Login = () => {
           <Form>
             <InputField name="email" label="Email" />
             <InputField name="password" type="password" label="Password" />
-            <SubmitButton action="Login" />
+            <SubmitButton action="Login" loading={loading} />
           </Form>
         </Formik>
       </Box>

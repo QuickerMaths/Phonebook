@@ -2,11 +2,9 @@ import React from "react";
 import { Button } from "@mui/material";
 import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
 
-const SubmitButton = ({ action }) => {
+const SubmitButton = ({ action, loading }) => {
   const { submitForm } = useFormikContext();
-  const { loading } = useSelector((state) => state.authSlice);
 
   return (
     <Button
@@ -30,6 +28,7 @@ const SubmitButton = ({ action }) => {
 
 SubmitButton.propTypes = {
   action: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 export default SubmitButton;

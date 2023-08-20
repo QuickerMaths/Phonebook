@@ -1,68 +1,44 @@
-import React, { useState } from "react";
-import styles from "./ContactsForm.module.css";
-import FormElement from "./form-element/FormElement";
-import { contactValidation } from "../../validation/contactValidation";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createContact } from "../../redux/contacts/contactsSlice";
+import { Box } from "@mui/material";
+import { Form, Formik } from "formik";
+import { contactValidation } from "../../validation/contactValidation";
+import { createContact } from "../../redux/contacts/operations";
+import InputField from "../formUI/input-field/InputField";
+import SubmitButton from "../formUI/submit-button/SubmitButton";
 
 const ContactsForm = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.contactsSlice);
 
-  const [contact, setContact] = useState({
-    name: "",
-    number: "",
-  });
-
-  const [errors, setErrors] = useState({
-    name: [],
-    number: [],
-  });
-
-  const handleChange = (e) => {
-    setContact((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setErrors({ name: [], number: [] });
-
-    await contactValidation
-      .validate(contact, { abortEarly: false })
-      .then((res) => {
-        dispatch(createContact(res));
-      })
-      .catch((err) => {
-        err.inner.forEach((e) => {
-          setErrors((prev) => ({
-            ...prev,
-            [e.path]: [...prev[e.path], e.message],
-          }));
-        });
-        console.log(err);
-      });
-  };
-
   return (
-    <section>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <FormElement
-          name={"name"}
-          type={"text"}
-          handleChange={handleChange}
-          errors={errors.name}
-        />
-        <FormElement
-          name={"number"}
-          type={"tel"}
-          handleChange={handleChange}
-          errors={errors.number}
-        />
-        <button type="submit" disabled={loading} className={styles.button}>
-          Add contact
-        </button>
-      </form>
-    </section>
+    <Box
+      sx={{
+        width: "65%",
+      }}
+    >
+      <Formik
+        initialValues={{
+          name: "",
+          number: "",
+        }}
+        validationSchema={contactValidation}
+        onSubmit={async (values) => {
+          await dispatch(
+            createContact({
+              name: values.name,
+              number: values.number,
+            })
+          );
+        }}
+      >
+        <Form>
+          <InputField name="name" label="Name" />
+          <InputField name="number" type="number" label="Number" />
+          <SubmitButton action="Add Contact" loading={loading} />
+        </Form>
+      </Formik>
+    </Box>
   );
 };
 
