@@ -1,7 +1,13 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { ListItem, ListItemText, IconButton } from "@mui/material";
+import { useDispatch } from "react-redux";
+import {
+  ListItem,
+  ListItemText,
+  IconButton,
+  ListItemAvatar,
+} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import PersonIcon from "@mui/icons-material/Person";
 import PropTypes from "prop-types";
 
 import { deleteContact } from "../../../redux/contacts/operations";
@@ -21,6 +27,12 @@ const Contact = ({ contact }) => {
         </IconButton>
       }
     >
+      <ListItemAvatar>
+        <PersonIcon
+          sx={{ backgroundColor: "secondary.main", borderRadius: "50%" }}
+        />
+      </ListItemAvatar>
+
       <ListItemText
         primary={`${contact.name} `}
         secondary={`${contact.number}`}

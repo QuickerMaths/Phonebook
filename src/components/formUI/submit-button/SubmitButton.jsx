@@ -13,11 +13,11 @@ const SubmitButton = ({ action, loading }) => {
       sx={{
         mt: 2,
         minWidth: 200,
-        backgroundColor: "primary.dark",
+        backgroundColor: "secondary.light",
         "&:hover": {
-          backgroundColor: "primary.main",
+          backgroundColor: "secondary.main",
           opacity: [0.9, 0.8, 0.7],
-          color: "primary.contrastText",
+          color: "secondary.contrastText",
         },
       }}
     >

@@ -42,10 +42,9 @@ const Contacts = () => {
             })}
           />
         )}
-        <Typography variant="h2">Contact book</Typography>
         <ContactsForm />
 
-        <Typography variant="h3" sx={{ mt: 5 }}>
+        <Typography variant="h3" sx={{ my: 5 }}>
           Contacts
         </Typography>
         <Filter />

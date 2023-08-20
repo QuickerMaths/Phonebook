@@ -19,7 +19,7 @@ const InputField = ({ name, ...props }) => {
     config.helperText = meta.error;
   }
 
-  return <TextField {...config} sx={{ mt: 4 }} />;
+  return <TextField {...config} sx={{ mt: 4 }} color="secondary" />;
 };
 
 InputField.propTypes = {

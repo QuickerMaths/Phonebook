@@ -12,6 +12,7 @@ const Filter = () => {
       variant="outlined"
       label="Find contacts by name"
       onChange={(e) => dispatch(setFilter(e.target.value))}
+      color="secondary"
     />
   );
 };
