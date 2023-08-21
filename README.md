@@ -1,8 +1,36 @@
-# React + Vite
+# [PhoneBook](https://github.com/QuickerMaths/goit-react-hw-08-phonebook)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Simple phone book application written in React using JavaScript.
 
-Currently, two official plugins are available:
+## About the application
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The app connects to an API(), allowing users to create an account and use its simple features of adding, deleting, and searching contacts.
+To authenticate the user app, the JWT token is saved in localStorage. 
+
+## How to run this on your machine
+
+
+```
+# clone this repo 
+git clone https://github.com/QuickerMaths/goit-react-hw-08-phonebook
+
+# install dependencies 
+npm i
+
+# start the local server 
+npm run dev
+```
+
+## Full Techstack
+
+* [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript?retiredLocale=pl)
+* [React](https://react.dev/) - frontend framework
+* [React Router Dom](https://reactrouter.com/en/main) - routing
+* [ReduxToolkit](https://redux-toolkit.js.org/) - state management
+* [axios](https://axios-http.com/docs/intro) - data fetching
+* [MaterialUI](https://mui.com/) - styling
+* [Formik](https://formik.org/) - forms handling
+* [yup](https://github.com/jquense/yup) - form validation
+* [prop-types](https://github.com/facebook/prop-types) - props typing
+* [nanoid](https://github.com/ai/nanoid) - id generation
+* [gh-pages](https://github.com/tschaub/gh-pages) - deployment
