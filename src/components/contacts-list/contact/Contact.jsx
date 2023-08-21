@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   ListItem,
   ListItemText,
@@ -14,6 +14,7 @@ import { deleteContact } from "../../../redux/contacts/operations";
 
 const Contact = ({ contact }) => {
   const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.contactsSlice);
 
   return (
     <ListItem
@@ -22,6 +23,7 @@ const Contact = ({ contact }) => {
         <IconButton
           aria-label="delete"
           onClick={() => dispatch(deleteContact(contact.id))}
+          disabled={loading}
         >
           <DeleteIcon sx={{ color: "red" }} />
         </IconButton>

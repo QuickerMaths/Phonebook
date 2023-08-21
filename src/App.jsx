@@ -1,7 +1,6 @@
 import React, { lazy, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Container } from "@mui/material";
 
 import SharedLayout from "./components/shared-layout/SharedLayout";
 import PrivateRoute from "./components/private-route/PrivateRoute";
@@ -10,12 +9,6 @@ const Home = lazy(() => import("./pages/home/Home"));
 const Login = lazy(() => import("./pages/login/Login"));
 const Register = lazy(() => import("./pages/register/Register"));
 const Contacts = lazy(() => import("./pages/contacts/Contacts"));
-
-//TODO: use react presist to save token in local storage
-
-//TODO: fix loading state after deleting contact
-
-//TODO: look at this code to find possible bugs and fix them
 
 const App = () => {
   const navigate = useNavigate();
