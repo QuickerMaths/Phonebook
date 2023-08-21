@@ -20,6 +20,7 @@ const SubmitButton = ({ action, loading }) => {
           color: "secondary.contrastText",
         },
       }}
+      disabled={loading}
     >
       {loading ? "Loading..." : action}
     </Button>

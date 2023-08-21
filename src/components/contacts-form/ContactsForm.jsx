@@ -24,8 +24,8 @@ const ContactsForm = () => {
           number: "",
         }}
         validationSchema={contactValidation}
-        onSubmit={async (values) => {
-          await dispatch(
+        onSubmit={(values) => {
+          dispatch(
             createContact({
               name: values.name,
               number: values.number,
