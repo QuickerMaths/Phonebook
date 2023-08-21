@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Typography,
   Box,
@@ -11,16 +11,13 @@ import {
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { logoutUser } from "../../redux/auth/operations";
-import GrowError from "../formUI/grow-error/GrowError";
 
 const Header = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const {
     currentUser: { email },
     token,
-    error,
   } = useSelector((state) => state.authSlice);
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -41,19 +38,10 @@ const Header = () => {
         justifyContent: "space-between",
         backgroundColor: "primary.main",
         position: "relative",
-        mb: 20,
+        mb: 10,
       }}
       component="header"
     >
-      {error && (
-        <GrowError
-          error={error}
-          sx={() => ({
-            position: "absolute",
-            bottom: "-80px",
-          })}
-        />
-      )}
       <Link to={token ? "/contacts" : "/"} style={{ textDecoration: "none" }}>
         <Typography
           variant="h1"

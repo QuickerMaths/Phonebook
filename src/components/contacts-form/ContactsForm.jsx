@@ -1,9 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box } from "@mui/material";
-import { Form, Formik } from "formik";
+import { Formik } from "formik";
 import { contactValidation } from "../../validation/contactValidation";
 import { createContact } from "../../redux/contacts/operations";
+import FormWrapper from "../formUI/form-wrapper/FormWrapper";
 import InputField from "../formUI/input-field/InputField";
 import SubmitButton from "../formUI/submit-button/SubmitButton";
 
@@ -32,11 +33,11 @@ const ContactsForm = () => {
           );
         }}
       >
-        <Form>
+        <FormWrapper>
           <InputField name="name" label="Name" />
           <InputField name="number" type="number" label="Number" />
           <SubmitButton action="Add Contact" loading={loading} />
-        </Form>
+        </FormWrapper>
       </Formik>
     </Box>
   );

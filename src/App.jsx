@@ -13,6 +13,8 @@ const Contacts = lazy(() => import("./pages/contacts/Contacts"));
 
 //TODO: use react presist to save token in local storage
 
+//TODO: fix loading state after deleting contact
+
 //TODO: look at this code to find possible bugs and fix them
 
 const App = () => {
@@ -26,18 +28,16 @@ const App = () => {
   }, []);
 
   return (
-    <Container sx={{ minheight: "100vh" }}>
-      <Routes>
-        <Route path="/" element={<SharedLayout />}>
-          <Route index element={<Home />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route element={<PrivateRoute />}>
-            <Route path="contacts" element={<Contacts />} />
-          </Route>
+    <Routes>
+      <Route path="/" element={<SharedLayout />}>
+        <Route index element={<Home />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="contacts" element={<Contacts />} />
         </Route>
-      </Routes>
-    </Container>
+      </Route>
+    </Routes>
   );
 };
 

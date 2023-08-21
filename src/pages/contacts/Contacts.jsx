@@ -29,6 +29,7 @@ const Contacts = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
+          gap: "20px",
           p: 2,
           borderRadius: "10px",
         }}
@@ -43,10 +44,6 @@ const Contacts = () => {
           />
         )}
         <ContactsForm />
-
-        <Typography variant="h3" sx={{ my: 5 }}>
-          Contacts
-        </Typography>
         <Filter />
         <ContactsList />
       </Box>

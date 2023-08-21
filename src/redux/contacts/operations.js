@@ -14,8 +14,6 @@ export const fetchContacts = createAsyncThunk(
       setAuthorizationHeader(thunkAPI.getState().authSlice.token);
       const contacts = await axios.get(`${baseUrl}/contacts`);
 
-      console.log(contacts.data);
-
       return contacts.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(

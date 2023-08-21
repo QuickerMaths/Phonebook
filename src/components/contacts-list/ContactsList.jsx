@@ -15,7 +15,9 @@ const ContactsList = () => {
     <List
       sx={{
         width: "100%",
-        maxWidth: 200,
+        maxWidth: 300,
+        maxHeight: 400,
+        overflow: "auto",
       }}
     >
       {filteredContacts.length > 0 ? (

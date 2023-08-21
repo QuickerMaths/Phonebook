@@ -1,10 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router";
+import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Box, Typography } from "@mui/material";
-import { Form, Formik } from "formik";
+import { Container, Box, Typography, Button } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Formik } from "formik";
 import { userSignUpValidationSchema } from "../../validation/userSignUpValidation";
 import { signupUser } from "../../redux/auth/operations";
+import FormWrapper from "../../components/formUI/form-wrapper/FormWrapper";
 import InputField from "../../components/formUI/input-field/InputField";
 import SubmitButton from "../../components/formUI/submit-button/SubmitButton";
 import GrowError from "../../components/formUI/grow-error/GrowError";
@@ -12,6 +15,7 @@ import GrowError from "../../components/formUI/grow-error/GrowError";
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { state } = useLocation();
   const { error, loading } = useSelector((state) => state.authSlice);
 
   return (
@@ -31,6 +35,11 @@ const Register = () => {
           borderRadius: "10px",
         }}
       >
+        <Button sx={{ position: "absolute", top: "15px", left: "10px" }}>
+          <Link to={state ? state.from : "/"}>
+            <ArrowBackIcon sx={{ color: "secondary.main", fontSize: 30 }} />
+          </Link>
+        </Button>
         {error && (
           <GrowError
             error={error}
@@ -56,10 +65,12 @@ const Register = () => {
                 email: values.email,
                 password: values.password,
               })
-            ).then(() => navigate("/contacts"));
+            ).then((res) => {
+              if (!res.hasOwnProperty("error")) navigate("/contacts");
+            });
           }}
         >
-          <Form>
+          <FormWrapper>
             <InputField name="name" label="Name" />
             <InputField name="email" label="Email" />
             <InputField name="password" type="password" label="Password" />
@@ -69,7 +80,26 @@ const Register = () => {
               label="Confirm password"
             />
             <SubmitButton action="SignUp" loading={loading} />
-          </Form>
+
+            <Typography
+              variant="body1"
+              sx={{ mt: 2, display: "flex", alignItems: "center" }}
+            >
+              Already have an account?
+              <Link to="/login">
+                <Button
+                  sx={{
+                    color: "secondary.main",
+                    "&:hover": {
+                      color: "secondary.contrastText",
+                    },
+                  }}
+                >
+                  Login
+                </Button>
+              </Link>
+            </Typography>
+          </FormWrapper>
         </Formik>
       </Box>
     </Container>

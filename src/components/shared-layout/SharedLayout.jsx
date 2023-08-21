@@ -8,7 +8,9 @@ const ShardLayout = () => {
     <>
       <Header />
       <Suspense fallback={<h2>Loading...</h2>}>
-        <Outlet />
+        <Container>
+          <Outlet />
+        </Container>
       </Suspense>
     </>
   );

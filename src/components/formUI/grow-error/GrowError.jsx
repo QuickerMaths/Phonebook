@@ -12,6 +12,11 @@ const GrowError = ({ error, sx = [] }) => {
       in={error}
       style={{ transformOrigin: "0 0 0 0" }}
       {...(error ? { timeout: 1000 } : {})}
+      addEndListener={() => {
+        setTimeout(() => {
+          dispatch(resetError());
+        }, 3000);
+      }}
       unmountOnExit
     >
       <Alert

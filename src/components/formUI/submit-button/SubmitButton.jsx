@@ -12,7 +12,7 @@ const SubmitButton = ({ action, loading }) => {
       onClick={() => submitForm()}
       sx={{
         mt: 2,
-        minWidth: 200,
+        minWidth: 300,
         backgroundColor: "secondary.light",
         "&:hover": {
           backgroundColor: "secondary.main",

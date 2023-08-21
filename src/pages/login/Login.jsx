@@ -1,10 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { Container, Box, Typography } from "@mui/material";
-import { Form, Formik } from "formik";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import { Container, Box, Typography, Button } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Formik } from "formik";
 import { userLoginValidationSchema } from "../../validation/userLoginValidation";
 import { loginUser } from "../../redux/auth/operations";
+import FormWrapper from "../../components/formUI/form-wrapper/FormWrapper";
 import InputField from "../../components/formUI/input-field/InputField";
 import SubmitButton from "../../components/formUI/submit-button/SubmitButton";
 import GrowError from "../../components/formUI/grow-error/GrowError";
@@ -12,6 +14,8 @@ import GrowError from "../../components/formUI/grow-error/GrowError";
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { state } = useLocation();
+
   const { error, loading } = useSelector((state) => state.authSlice);
 
   return (
@@ -31,6 +35,11 @@ const Login = () => {
           borderRadius: "10px",
         }}
       >
+        <Button sx={{ position: "absolute", top: "15px", left: "10px" }}>
+          <Link to={state ? state.from : "/"}>
+            <ArrowBackIcon sx={{ color: "secondary.main", fontSize: 30 }} />
+          </Link>
+        </Button>
         {error && (
           <GrowError
             error={error}
@@ -53,14 +62,35 @@ const Login = () => {
                 email: values.email,
                 password: values.password,
               })
-            ).then(() => navigate("/contacts"));
+            ).then((res) => {
+              if (!res.hasOwnProperty("error")) navigate("/contacts");
+            });
           }}
         >
-          <Form>
+          <FormWrapper>
             <InputField name="email" label="Email" />
             <InputField name="password" type="password" label="Password" />
             <SubmitButton action="Login" loading={loading} />
-          </Form>
+
+            <Typography
+              variant="body1"
+              sx={{ mt: 2, display: "flex", alignItems: "center" }}
+            >
+              Don't have an account?
+              <Link to="/register">
+                <Button
+                  sx={{
+                    color: "secondary.main",
+                    "&:hover": {
+                      color: "secondary.contrastText",
+                    },
+                  }}
+                >
+                  Register
+                </Button>
+              </Link>
+            </Typography>
+          </FormWrapper>
         </Formik>
       </Box>
     </Container>
