@@ -4,8 +4,7 @@ Simple phone book application written in React using JavaScript.
 
 ## About the application
 
-The app connects to an [API](https://connections-api.herokuapp.com/docs/), allowing users to create an account and use its simple features of adding, deleting, and searching contacts.
-To authenticate the user app, the JWT token is saved in localStorage. 
+The app connects to an [API](https://connections-api.herokuapp.com/docs/), allowing users to create an account and use its simple features of adding, deleting, and searching contacts. 
 
 ## How to run this on your machine
 
