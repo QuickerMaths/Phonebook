@@ -1,4 +1,4 @@
-# [PhoneBook](https://github.com/QuickerMaths/goit-react-hw-08-phonebook)
+# PhoneBook
 
 Simple phone book application written in React using JavaScript.
 
