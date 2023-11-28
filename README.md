@@ -32,4 +32,3 @@ npm run dev
 * [yup](https://github.com/jquense/yup) - form validation
 * [prop-types](https://github.com/facebook/prop-types) - props typing
 * [nanoid](https://github.com/ai/nanoid) - id generation
-* [gh-pages](https://github.com/tschaub/gh-pages) - deployment
